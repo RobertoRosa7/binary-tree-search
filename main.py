@@ -1,8 +1,11 @@
 class BSTNode:
-    def __int__(self, val=None):
+    def __init__(self, val=None):
         self.left = None
         self.right = None
         self.val = val
+
+    def get_val(self):
+        return self.val
 
     def insert(self, val):
         if not self.val:
@@ -19,7 +22,6 @@ class BSTNode:
         if self.right:
             self.right.insert(val)
             return
-
         self.right = BSTNode(val)
 
     def get_min(self):
@@ -35,7 +37,7 @@ class BSTNode:
         return current.val
 
     def delete(self, val):
-        if self == None:
+        if self is None:
             return self
         if val < self.val:
             if self.left:
@@ -45,9 +47,9 @@ class BSTNode:
             if self.right:
                 self.right = self.right.delete(val)
             return self
-        if self.right == None:
+        if self.right is None:
             return self.left
-        if self.left == None:
+        if self.left is None:
             return self.right
         min_large_node = self.right
         while min_large_node.left:
@@ -57,15 +59,14 @@ class BSTNode:
         return self
 
     def exists(self, val):
-        if val == self.val:
+        if val is self.val:
             return True
         if val < self.val:
-            if self.left == None:
+            if self.left is None:
                 return False
             return self.left.exists(val)
-        if self.right == None:
+        if self.right is None:
             return False
-
         return self.right.exists(val)
 
     def preorder(self, vals):
@@ -94,3 +95,47 @@ class BSTNode:
         if self.val is not None:
             vals.append(self.val)
         return vals
+
+
+def main():
+    nums = [12, 6, 18, 19, 21, 11, 3, 5, 4, 24, 18, 2, 20]
+    bst = BSTNode()
+
+    for num in nums:
+        bst.insert(num)
+
+    print("Pre Order:")
+    print(bst.preorder([]))
+    print('#')
+
+    print("Post Order:")
+    print(bst.postorder([]))
+    print('#')
+
+    print("In Order:")
+    print(bst.inorder([]))
+    print('#')
+
+    nums = [2, 6, 20]
+    print("deleting: " + str(nums))
+    for num in nums:
+        bst.delete(num)
+    print("#")
+
+    print('4 exists:')
+    print(bst.exists(4))
+    print('2 exists:')
+    print(bst.exists(2))
+    print('12 exists:')
+    print(bst.exists(12))
+    print('18 exists:')
+    print(bst.exists(18))
+    print('6 exists:')
+    print(bst.exists(6))
+
+    print("min: " + str(bst.get_min()))
+    print("max: " + str(bst.get_max()))
+
+
+if __name__ == "__main__":
+    main()
